@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-live: #ff2e2e;
+  --color-live-hover: #e62929;
+  --color-blank: #e0e0e0;
+  --color-blank-hover: #cccccc;
+  --color-bg-dark: #050505;
+  --color-bg-panel: #0a0a0a;
+}
+
+body {
+  background-color: var(--color-bg-dark);
+  color: #e0e0e0;
+  overflow-x: hidden;
+  font-family: monospace;
+}
+
+/* CRT Scanline Effect */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Subtle vignette */
+.vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-shadow: 0 0 150px rgba(0,0,0,0.9) inset;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+/* Hide scrollbar for history panel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
