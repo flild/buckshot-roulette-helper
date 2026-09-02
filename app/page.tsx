@@ -145,9 +145,9 @@ function SetupScreen({ onStart, bestStreak, currentStreak }: { onStart: (l: numb
   }, [total, live]);
 
   const presets = [
-    { l: 1, b: 1 }, { l: 1, b: 2 }, { l: 2, b: 1 },
-    { l: 2, b: 2 }, { l: 2, b: 3 }, { l: 3, b: 2 },
-    { l: 3, b: 3 }, { l: 3, b: 4 }, { l: 4, b: 3 },
+    { l: 1, b: 1 }, { l: 1, b: 2 },
+    { l: 2, b: 2 }, { l: 2, b: 3 },
+    { l: 3, b: 3 }, { l: 3, b: 4 }, 
     { l: 4, b: 4 }
   ];
 
@@ -222,7 +222,7 @@ function SetupScreen({ onStart, bestStreak, currentStreak }: { onStart: (l: numb
 
           <div>
             <label className="block text-[#666] text-center mb-3 uppercase text-[10px] tracking-widest">Быстрые пресеты</label>
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-5">
               {presets.map((p, i) => (
                 <button 
                   key={i}
