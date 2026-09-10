@@ -18,21 +18,27 @@ export function useBuckshot() {
 
   // Load from local storage
   useEffect(() => {
-    const saved = localStorage.getItem('buckshot-tracker-state');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Fallback for older saves
-        if (parsed.currentMagazine && !parsed.currentMagazine.sequence) {
-           parsed.currentMagazine.sequence = Array(parsed.currentMagazine.total).fill('unknown');
+    // Only access localStorage if in browser environment
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('buckshot-tracker-state');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          // Fallback for older saves
+          if (parsed.currentMagazine && !parsed.currentMagazine.sequence) {
+             parsed.currentMagazine.sequence = Array(parsed.currentMagazine.total).fill('unknown');
+          }
+          if (parsed.initialMagazine && !parsed.initialMagazine.sequence) {
+             parsed.initialMagazine.sequence = Array(parsed.initialMagazine.total).fill('unknown');
+          }
+          // Minimal validation to ensure it's not arbitrary data
+          if (typeof parsed === 'object' && parsed !== null && 'mode' in parsed) {
+             // eslint-disable-next-line react-hooks/set-state-in-effect
+             setState(parsed as AppState);
+          }
+        } catch (e) {
+          console.error('Failed to parse saved state', e);
         }
-        if (parsed.initialMagazine && !parsed.initialMagazine.sequence) {
-           parsed.initialMagazine.sequence = Array(parsed.initialMagazine.total).fill('unknown');
-        }
-        // eslint-disable-next-line
-        setState(parsed);
-      } catch (e) {
-        console.error('Failed to parse saved state', e);
       }
     }
     setHydrated(true);

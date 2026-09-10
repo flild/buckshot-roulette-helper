@@ -1,73 +1,90 @@
-# 🎰 Трекер Buckshot Roulette (Buckshot Tracker)
-<img width="1476" height="787" alt="image" src="https://github.com/user-attachments/assets/e373a0f0-4c30-4951-8f65-9cddd048b79f" />
+# 🎰 Buckshot Roulette Tracker / Трекер Buckshot Roulette
 
-![Buckshot Tracker](https://img.shields.io/badge/Status-Active-success)
-![Next.js](https://img.shields.io/badge/Next.js-15+-black?logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
+[![Status-Active](https://img.shields.io/badge/Status-Active-success)](https://github.com/your-username/buckshot-tracker)
+[![Next.js](https://img.shields.io/badge/Next.js-15+-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Автономный веб-помощник для игры **Buckshot Roulette**. Позволяет отслеживать боевые и холостые патроны, рассчитывать точные вероятности следующего выстрела и управлять известной последовательностью патронов (имитация предмета «Телефон»). 
+*Read this in other languages: [English](#english), [Русский](#русский).*
+
+<img width="800" alt="Buckshot Tracker Preview" src="https://github.com/user-attachments/assets/e373a0f0-4c30-4951-8f65-9cddd048b79f" />
+
+---
+
+## English
+
+A standalone web assistant for the game **Buckshot Roulette**. It helps track live and blank shells, calculates the exact probabilities of the next shot, and manages known shell sequences (simulating the "Burner Phone" item).
+
+Designed to handle the mental math for the player, letting you focus on tactics and item management.
+
+### ✨ Key Features
+
+*   **🧮 Accurate Probability Calculation**: Automatically recalculates the chance of the next shot based on fired and "known" shells.
+*   **📱 "Burner Phone" Support (Chamber Sequence)**: Interactive shell queue. If you use the Burner Phone item and learn a specific shell's charge, mark it in the tracker (Live / Blank) to instantly adjust the probability math.
+*   **⏪ Undo Actions**: Accidentally clicked the wrong button? Any action can be rolled back.
+*   **📊 Round History**: Detailed list of all shots in the current magazine. Shows the probability at which each shot was taken.
+*   **🏆 Match and Streak Management**: Skip the current magazine (if items reset it or the Dealer reloads) and track Win Streaks (Best & Current).
+*   **💾 Local Save**: Progress, win streaks, and the current magazine state won't be lost on accidental page refreshes.
+*   **🎨 Dual Interface Modes**: Full mode with comprehensive analytics and a minimalist Assist mode.
+
+### 🚀 Tech Stack
+
+*   **Framework:** [Next.js](https://nextjs.org/) (App Router)
+*   **Language:** [TypeScript](https://www.typescriptlang.org/)
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+*   **Animations:** [Framer Motion](https://www.framer.com/motion/)
+*   **Icons:** [Lucide React](https://lucide.dev/)
+
+### 🛠️ Installation & Setup (For Developers)
+
+1. **Clone the repository:**
+   `git clone https://github.com/your-username/buckshot-tracker.git`
+   `cd buckshot-tracker`
+2. **Install dependencies:**
+   `npm install`
+3. **Start the development server:**
+   `npm run dev &`
+4. **Open in browser:** Go to [http://localhost:3000](http://localhost:3000)
+
+### 🤝 Contributing
+Pull requests are welcome! If you want to add new features (e.g., item inventory, damage calculator with the handsaw, or Dealer AI predictor), please open an *Issue* to discuss or create a *Pull Request*.
+
+---
+
+## Русский
+
+Автономный веб-помощник для игры **Buckshot Roulette**. Позволяет отслеживать боевые и холостые патроны, рассчитывать точные вероятности следующего выстрела и управлять известной последовательностью патронов (имитация предмета «Телефон»).
 
 Трекер создан для того, чтобы снять с игрока рутину подсчетов в уме, помогая сосредоточиться на тактике и управлении предметами.
 
-## ✨ Ключевые возможности
+### ✨ Ключевые возможности
 
 *   **🧮 Точный расчет вероятностей**: Автоматический пересчет шанса следующего выстрела с учетом уже отстрелянных и «известных» патронов.
 *   **📱 Поддержка «Телефона» (Chamber Sequence)**: Интерактивная очередь патронов. Если в игре вы используете предмет (Burner Phone) и узнаете заряд конкретного патрона по счету, вы можете отметить его в трекере (Боевой / Холостой), и математика вероятностей мгновенно перестроится.
 *   **⏪ Отмена действий (Undo)**: Случайно нажали не ту кнопку? Любое действие можно откатить.
-*   **📊 История раунда**: Подробный список всех выстрелов в текущем магазине (сверху вниз). Для каждого выстрела показывается вероятность, с которой он был сделан.
-*   **🏆 Управление матчами и сериями**: 
-    *   Скип текущего магазина (если вы использовали предметы для сброса или Дилер перезаряжает дробовик).
-    *   Подсчет побед (Win Streak) и лучшей серии.
-*   **💾 Локальное сохранение**: При случайном обновлении страницы ваш прогресс, серия побед и текущий магазин никуда не пропадут.
-*   **🎨 Два режима интерфейса**: Полный режим (Full) со всей аналитикой и компактный режим помощника (Assist) для минималистов.
+*   **📊 История раунда**: Подробный список всех выстрелов в текущем магазине. Для каждого выстрела показывается вероятность.
+*   **🏆 Управление матчами и сериями**: Скип текущего магазина, подсчет побед (Win Streak) и лучшей серии.
+*   **💾 Локальное сохранение**: Ваш прогресс и текущий магазин сохраняются в браузере.
+*   **🎨 Два режима интерфейса**: Полный режим (Full) со всей аналитикой и компактный режим помощника (Assist).
 
-## 🚀 Технологический стек
-
-*   **Фреймворк:** [Next.js](https://nextjs.org/) (App Router)
-*   **Язык:** [TypeScript](https://www.typescriptlang.org/)
-*   **Стилизация:** [Tailwind CSS](https://tailwindcss.com/)
-*   **Анимации:** [Framer Motion](https://www.framer.com/motion/)
-*   **Иконки:** [Lucide React](https://lucide.dev/)
-
-## 🛠️ Установка и запуск (Для разработчиков)
-
-Если вы хотите запустить проект локально или доработать его:
+### 🛠️ Установка и запуск (Для разработчиков)
 
 1. **Склонируйте репозиторий:**
-   ```bash
-   git clone https://github.com/ВАШ_НИК/buckshot-tracker.git
-   cd buckshot-tracker
-   ```
-
+   `git clone https://github.com/ВАШ_НИК/buckshot-tracker.git`
+   `cd buckshot-tracker`
 2. **Установите зависимости:**
-   ```bash
-   npm install
-   # или yarn install / pnpm install
-   ```
-
+   `npm install`
 3. **Запустите сервер разработки:**
-   ```bash
-   npm run dev
-   ```
+   `npm run dev &`
+4. **Откройте в браузере:** Перейдите по адресу [http://localhost:3000](http://localhost:3000)
 
-4. **Откройте в браузере:**
-   Перейдите по адресу [http://localhost:3000](http://localhost:3000)
-
-## 📖 Как пользоваться трекером
-
-1. **Зарядка дробовика**: В начале раунда Дилер показывает количество патронов. Выберите общее число, а затем укажите, сколько из них Боевых (🔴) и Холостых (⚪). Или используйте кнопки "Быстрых пресетов".
-2. **Отслеживание выстрелов**: По мере того как вы или Дилер стреляете, нажимайте соответствующие кнопки [Боевой] или [Холостой] в трекере.
-3. **Использование телефона**: Если вы применили телефон, кликните по нужному номеру патрона в блоке «Очередь патронов». 1 клик = Боевой, 2 клика = Холостой, 3 клика = Сброс до неизвестного.
-4. **Завершение**: Когда у Дилера заканчиваются жизни, нажимайте **«Победа (Матч)»**, чтобы увеличить счетчик Win Streak. Если закончились патроны, жмите **«След. магазин»**.
-
-## 🤝 Вклад в проект (Contributing)
-
-Пулл-реквесты приветствуются! Если вы хотите добавить новые фичи (например, инвентарь предметов, калькулятор урона с ножовкой или предсказатель действий ИИ Дилера), откройте *Issue* для обсуждения или сразу создавайте *Pull Request*.
-
-## 📄 Лицензия
-
-Этот проект распространяется под лицензией MIT. Подробности см. в файле [LICENSE](LICENSE).
+### 🤝 Вклад в проект (Contributing)
+Пулл-реквесты приветствуются! Открывайте *Issue* для обсуждения новых фич или сразу создавайте *Pull Request*.
 
 ---
-*Отказ от ответственности: Этот проект является фанатским инструментом и никак не связан с создателем оригинальной игры Buckshot Roulette (Mike Klubnika).*
+
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+*Disclaimer: This is a fan-made tool and is not affiliated with the creator of the original Buckshot Roulette game, Mike Klubnika.*
