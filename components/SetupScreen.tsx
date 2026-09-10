@@ -1,0 +1,116 @@
+import { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+
+export function SetupScreen({ onStart, bestStreak, currentStreak }: { onStart: (l: number, b: number) => void, bestStreak: number, currentStreak: number }) {
+  const [total, setTotal] = useState(5);
+  const [live, setLive] = useState(3);
+  const blank = total - live;
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (live > total) setLive(total);
+  }, [total, live]);
+
+  const presets = [
+    { l: 1, b: 1 }, { l: 1, b: 2 },
+    { l: 2, b: 2 }, { l: 2, b: 3 },
+    { l: 3, b: 3 }, { l: 3, b: 4 },
+    { l: 4, b: 4 }
+  ];
+
+  return (
+    <div className="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full px-4 py-8 animate-in fade-in duration-300">
+
+      {/* STREAK TARGET */}
+      <div className="bg-[#0a0a0a] border border-[#1a1a1a] p-6 text-center relative overflow-hidden mb-8">
+        <h3 className="text-[#888] tracking-widest uppercase mb-4 text-xs">Серия побед</h3>
+
+        <div className="flex justify-center gap-2 mb-4">
+          {[...Array(7)].map((_, i) => (
+            <div key={i} className={cn(
+              "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-500",
+              i < currentStreak ? "bg-[#ff2e2e] border-[#ff2e2e] shadow-[0_0_15px_rgba(255,46,46,0.4)]" : "border-[#333] bg-[#111]"
+            )}>
+              {i < currentStreak && <div className="w-2.5 h-2.5 bg-black rounded-full" />}
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between font-mono text-[10px] uppercase">
+          <span className="text-[#666]">Лучшая: <strong className="text-[#ffcc00]">{bestStreak}</strong></span>
+          <span className="text-[#ff2e2e]">ЦЕЛЬ: ВЫЖИТЬ 7 РАУНДОВ</span>
+        </div>
+      </div>
+
+      {/* SETUP CONTROLS */}
+      <div className="bg-[#0a0a0a] border border-[#1a1a1a] p-8">
+        <h2 className="text-xl font-bold text-[#e0e0e0] text-center mb-8 uppercase tracking-widest border-b border-[#1a1a1a] pb-4">Зарядка магазина</h2>
+
+        <div className="space-y-8">
+          <div>
+            <label className="block text-[#666] text-center mb-4 uppercase text-[10px] tracking-widest">Всего патронов</label>
+            <div className="flex justify-center gap-2 flex-wrap">
+              {[2,3,4,5,6,7,8].map(n => (
+                <button
+                  key={n}
+                  onClick={() => setTotal(n)}
+                  className={cn(
+                    "w-12 h-12 font-mono text-xl transition-colors border",
+                    total === n
+                      ? "bg-[#ff2e2e] text-black border-[#ff2e2e] shadow-[0_0_15px_rgba(255,46,46,0.4)]"
+                      : "bg-[#111] text-[#888] border-[#222] hover:border-[#444]"
+                  )}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 border-y border-[#1a1a1a] py-6">
+            <div className="text-center flex-1">
+              <label className="block text-[#ff2e2e] mb-2 uppercase text-[10px] tracking-widest">Боевых</label>
+              <div className="flex items-center justify-center gap-4 bg-[#111] p-2 border border-[#222]">
+                <button onClick={() => setLive(Math.max(0, live - 1))} className="w-10 h-10 bg-[#222] hover:bg-[#333] text-[#e0e0e0] text-xl flex items-center justify-center">-</button>
+                <span className="text-4xl font-black text-[#ff2e2e] w-12">{live}</span>
+                <button onClick={() => setLive(Math.min(total, live + 1))} className="w-10 h-10 bg-[#222] hover:bg-[#333] text-[#e0e0e0] text-xl flex items-center justify-center">+</button>
+              </div>
+            </div>
+
+            <div className="text-center flex-1">
+              <label className="block text-[#888] mb-2 uppercase text-[10px] tracking-widest">Холостых</label>
+              <div className="flex items-center justify-center gap-4 bg-[#111] p-2 border border-[#222]">
+                <div className="w-10 h-10 opacity-0 pointer-events-none" />
+                <span className="text-4xl font-black text-[#e0e0e0] w-12">{blank}</span>
+                <div className="w-10 h-10 opacity-0 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-[#666] text-center mb-3 uppercase text-[10px] tracking-widest">Быстрые пресеты</label>
+            <div className="flex flex-wrap justify-center gap-5">
+              {presets.map((p, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setTotal(p.l + p.b); setLive(p.l); }}
+                  className="px-4 py-2 bg-[#111] hover:bg-[#222] border border-[#222] text-[10px] text-[#888] flex items-center gap-2 uppercase font-bold transition-colors"
+                >
+                  <span className="text-[#ff2e2e]">{p.l} Б</span> / <span className="text-[#e0e0e0]">{p.b} Х</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => onStart(live, blank)}
+            disabled={total === 0}
+            className="w-full py-6 bg-[#ff2e2e] text-black font-black text-2xl uppercase tracking-widest hover:bg-[#e62929] transition-colors mt-8 shadow-[0_0_20px_rgba(255,46,46,0.2)] hover:shadow-[0_0_30px_rgba(255,46,46,0.4)] disabled:opacity-50 disabled:pointer-events-none"
+          >
+            Начать Отслеживание
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
