@@ -67,7 +67,7 @@ export function AssistTracker({ state, shoot, toggleViewMode, endRound }: {
           ) : (
             <div className="w-full flex flex-col sm:flex-row gap-4 justify-center">
                <button onClick={() => endRound('abandoned')} className="w-full sm:w-auto px-12 py-8 bg-[#111] border-4 border-[#e0e0e0] text-[#e0e0e0] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#e0e0e0] transition-colors active:scale-95">След. магазин</button>
-               <button onClick={() => endRound('win')} className="w-full sm:w-auto px-12 py-8 bg-[#1a1a05] border-4 border-[#ffcc00] text-[#ffcc00] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#ffcc00] transition-colors active:scale-95">Победа в матче</button>
+               <button onClick={() => endRound('win')} className="w-full sm:w-auto px-12 py-8 bg-[#1a1a05] border-4 border-[#ffcc00] text-[#ffcc00] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#ffcc00] transition-colors active:scale-95">Победа в раунде</button>
                <button onClick={() => endRound('loss')} className="w-full sm:w-auto px-12 py-8 bg-[#1a0505] border-4 border-[#ff2e2e] text-[#ff2e2e] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#ff2e2e] transition-colors active:scale-95">Поражение</button>
             </div>
           )}

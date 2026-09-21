@@ -28,7 +28,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
           <div className="grid grid-cols-2 gap-4">
             <div className="p-3 bg-[#0c0c0c] border border-[#1a1a1a]">
               <div className="text-[10px] text-[#666] uppercase">Лучшая серия</div>
-              <div className="text-xl font-bold text-[#ffcc00]">{state.bestStreak} <span className="text-[10px] text-[#444] font-normal">МАКС</span></div>
+              <div className="text-xl font-bold text-[#ffcc00]">{state.bestMatchesWon} <span className="text-[10px] text-[#444] font-normal">МАКС</span></div>
             </div>
             <div className="p-3 bg-[#0c0c0c] border border-[#1a1a1a]">
               <div className="text-[10px] text-[#666] uppercase">Всего выстрелов</div>
@@ -81,7 +81,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
               <span className="text-[#666]">[R]</span>
             </button>
             <div className="grid grid-cols-2 gap-2 mt-2">
-              <button onClick={() => endRound('win')} className="px-4 py-2 bg-[#1a1a05] hover:bg-[#ffcc00] border border-[#332b00] hover:text-black text-[10px] text-[#ffcc00] uppercase font-bold transition-colors">Победа (Матч)</button>
+              <button onClick={() => endRound('win')} className="px-4 py-2 bg-[#1a1a05] hover:bg-[#ffcc00] border border-[#332b00] hover:text-black text-[10px] text-[#ffcc00] uppercase font-bold transition-colors">Победа (Раунд)</button>
               <button onClick={() => endRound('loss')} className="px-4 py-2 bg-[#1a0505] hover:bg-[#ff2e2e] border border-[#330a0a] hover:text-black text-[10px] text-[#ff2e2e] uppercase font-bold transition-colors">Поражение</button>
             </div>
           </div>
@@ -250,7 +250,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
                 onClick={() => endRound('win')}
                 className="group relative flex flex-col items-center justify-center border-4 border-[#ffcc00] bg-[#1a1a05] hover:bg-[#ffcc00] transition-colors active:scale-[0.98]"
               >
-                <span className="text-2xl font-black text-[#ffcc00] group-hover:text-black uppercase">Победа (Матч)</span>
+                <span className="text-2xl font-black text-[#ffcc00] group-hover:text-black uppercase">Победа (Раунд)</span>
               </button>
               <button
                 onClick={() => endRound('loss')}

@@ -16,13 +16,13 @@ export default function Page() {
 
   useEffect(() => {
     let t: NodeJS.Timeout;
-    if (state.streak === 7 && state.mode === 'setup') {
+    if (state.matchesWon === 7 && state.mode === 'setup') {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowWinAnimation(true);
       t = setTimeout(() => setShowWinAnimation(false), 4000);
     }
     return () => clearTimeout(t);
-  }, [state.streak, state.mode]);
+  }, [state.matchesWon, state.mode]);
 
   useKeyboardShortcuts({
     shoot,
@@ -51,7 +51,7 @@ export default function Page() {
             <div className="text-center">
               <Trophy className="w-32 h-32 text-yellow-500 mx-auto mb-6 drop-shadow-[0_0_30px_rgba(234,179,8,0.5)]" />
               <h2 className="text-5xl font-black text-yellow-500 tracking-wider mb-2 uppercase">Достижение получено</h2>
-              <p className="text-2xl text-yellow-200 font-mono">7 побед подряд</p>
+              <p className="text-2xl text-yellow-200 font-mono">7 пройденных матчей</p>
             </div>
           </motion.div>
         )}
@@ -69,11 +69,23 @@ export default function Page() {
               <span className="text-[10px] uppercase text-[#666]">Текущий Раунд</span>
               <span className="text-lg font-bold text-[#ffcc00]">#{state.roundsHistory.length + 1}</span>
             </div>
+            <div className="flex flex-col items-end hidden sm:flex">
+              <span className="text-[10px] uppercase text-[#666]">Пройдено матчей</span>
+              <span className="text-lg font-bold text-[#ff2e2e]">{state.matchesWon}</span>
+            </div>
+
             <div className="flex flex-col items-end">
-              <span className="text-[10px] uppercase text-[#666] text-right">Серия Побед</span>
-              <div className="flex gap-1 mt-1">
-                {[...Array(7)].map((_, i) => (
-                  <div key={i} className={cn("w-3 h-3 rounded-full", i < state.streak ? "bg-[#ff2e2e]" : "bg-[#333]")} />
+              <span className="text-[10px] uppercase text-[#666] text-right mb-1">Заряды (Раунд)</span>
+              <div className="flex gap-2">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className={cn(
+                    "w-4 h-6 border-2 flex items-center justify-center transition-all duration-300",
+                    i < state.roundWins
+                      ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_10px_rgba(255,204,0,0.6)]"
+                      : "bg-[#111] border-[#333]"
+                  )}>
+                    {i < state.roundWins && <div className="w-1.5 h-3 bg-white/50" />}
+                  </div>
                 ))}
               </div>
             </div>
@@ -87,8 +99,7 @@ export default function Page() {
           {state.mode === 'setup' ? (
           <SetupScreen 
             onStart={startRound} 
-            bestStreak={state.bestStreak} 
-            currentStreak={state.streak} 
+            state={state}
           />
         ) : (
           state.viewMode === 'full' ? (

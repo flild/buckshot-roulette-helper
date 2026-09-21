@@ -7,8 +7,9 @@ const defaultState: AppState = {
   initialMagazine: null,
   currentMagazine: null,
   shots: [],
-  streak: 0,
-  bestStreak: 0,
+  matchesWon: 0,
+  bestMatchesWon: 0,
+  roundWins: 0,
   roundsHistory: [],
 };
 
@@ -31,6 +32,19 @@ export function useBuckshot() {
           if (parsed.initialMagazine && !parsed.initialMagazine.sequence) {
              parsed.initialMagazine.sequence = Array(parsed.initialMagazine.total).fill('unknown');
           }
+          // Migrate legacy state
+          if (typeof parsed.streak !== 'undefined') {
+            parsed.matchesWon = parsed.streak;
+            delete parsed.streak;
+          }
+          if (typeof parsed.bestStreak !== 'undefined') {
+            parsed.bestMatchesWon = parsed.bestStreak;
+            delete parsed.bestStreak;
+          }
+          if (typeof parsed.roundWins === 'undefined') {
+            parsed.roundWins = 0;
+          }
+
           // Minimal validation to ensure it's not arbitrary data
           if (typeof parsed === 'object' && parsed !== null && 'mode' in parsed) {
              // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -170,12 +184,22 @@ export function useBuckshot() {
         timestamp: Date.now(),
       };
 
-      let newStreak = prev.streak;
-      if (result === 'win') newStreak += 1;
-      else if (result === 'loss') newStreak = 0;
-      // if abandoned, leave streak as is
+      let newRoundWins = prev.roundWins;
+      let newMatchesWon = prev.matchesWon;
 
-      const newBestStreak = Math.max(prev.bestStreak, newStreak);
+      if (result === 'win') {
+        newRoundWins += 1;
+        if (newRoundWins >= 3) {
+          newRoundWins = 0;
+          newMatchesWon += 1;
+        }
+      } else if (result === 'loss') {
+        newRoundWins = 0;
+        newMatchesWon = 0;
+      }
+      // if abandoned, leave stats as is
+
+      const newBestMatchesWon = Math.max(prev.bestMatchesWon, newMatchesWon);
 
       return {
         ...prev,
@@ -183,8 +207,9 @@ export function useBuckshot() {
         initialMagazine: null,
         currentMagazine: null,
         shots: [],
-        streak: newStreak,
-        bestStreak: newBestStreak,
+        roundWins: newRoundWins,
+        matchesWon: newMatchesWon,
+        bestMatchesWon: newBestMatchesWon,
         roundsHistory: [roundResult, ...prev.roundsHistory],
       };
     });

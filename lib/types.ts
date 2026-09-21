@@ -36,7 +36,8 @@ export interface AppState {
   initialMagazine: Magazine | null;
   currentMagazine: Magazine | null;
   shots: Shot[];
-  streak: number;
-  bestStreak: number;
+  matchesWon: number;
+  bestMatchesWon: number;
+  roundWins: number;
   roundsHistory: RoundResult[];
 }
