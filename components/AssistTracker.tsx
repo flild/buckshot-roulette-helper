@@ -53,22 +53,22 @@ export function AssistTracker({ state, shoot, toggleViewMode, endRound }: {
             <>
               <button
                 onClick={() => shoot('live')} disabled={mag.live === 0}
-                className="flex-1 max-w-[400px] h-32 sm:h-40 bg-[#1a0505] border-4 border-[#ff2e2e] hover:bg-[#ff2e2e] hover:text-black group text-4xl sm:text-5xl font-black text-[#ff2e2e] uppercase disabled:opacity-20 transition-all mx-auto w-full active:scale-95"
+                className="flex-1 max-w-[400px] h-32 sm:h-40 bg-[#1a0505] border-4 border-[#ff2e2e] hover:bg-[#ff2e2e] hover:shadow-[0_0_50px_rgba(255,46,46,0.6)] hover:text-black group text-4xl sm:text-5xl font-black text-[#ff2e2e] uppercase disabled:opacity-20 transition-all duration-300 mx-auto w-full active:scale-95"
               >
-                Боевой <span className="text-lg opacity-50 group-hover:text-black block">[L]</span>
+                Боевой <span className="text-lg opacity-50 group-hover:text-black block transition-colors">[L]</span>
               </button>
               <button
                 onClick={() => shoot('blank')} disabled={mag.blank === 0}
-                className="flex-1 max-w-[400px] h-32 sm:h-40 bg-[#111] border-4 border-[#e0e0e0] hover:bg-[#e0e0e0] hover:text-black group text-4xl sm:text-5xl font-black text-[#e0e0e0] uppercase disabled:opacity-20 transition-all mx-auto w-full active:scale-95"
+                className="flex-1 max-w-[400px] h-32 sm:h-40 bg-[#111] border-4 border-[#e0e0e0] hover:bg-[#e0e0e0] hover:shadow-[0_0_50px_rgba(224,224,224,0.4)] hover:text-black group text-4xl sm:text-5xl font-black text-[#e0e0e0] uppercase disabled:opacity-20 transition-all duration-300 mx-auto w-full active:scale-95"
               >
-                Холостой <span className="text-lg opacity-50 group-hover:text-black block">[B]</span>
+                Холостой <span className="text-lg opacity-50 group-hover:text-black block transition-colors">[B]</span>
               </button>
             </>
           ) : (
             <div className="w-full flex flex-col sm:flex-row gap-4 justify-center">
-               <button onClick={() => endRound('abandoned')} className="w-full sm:w-auto px-12 py-8 bg-[#111] border-4 border-[#e0e0e0] text-[#e0e0e0] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#e0e0e0] transition-colors active:scale-95">След. магазин</button>
-               <button onClick={() => endRound('win')} className="w-full sm:w-auto px-12 py-8 bg-[#1a1a05] border-4 border-[#ffcc00] text-[#ffcc00] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#ffcc00] transition-colors active:scale-95">Победа в раунде</button>
-               <button onClick={() => endRound('loss')} className="w-full sm:w-auto px-12 py-8 bg-[#1a0505] border-4 border-[#ff2e2e] text-[#ff2e2e] hover:text-black text-xl sm:text-2xl font-black uppercase hover:bg-[#ff2e2e] transition-colors active:scale-95">Поражение</button>
+               <button onClick={() => endRound('abandoned')} className="w-full sm:w-auto px-12 py-8 bg-[#111] border-4 border-[#e0e0e0] text-[#e0e0e0] hover:text-black hover:shadow-[0_0_40px_rgba(224,224,224,0.4)] text-xl sm:text-2xl font-black uppercase hover:bg-[#e0e0e0] transition-all duration-300 active:scale-95">След. магазин</button>
+               <button onClick={() => endRound('win')} className="w-full sm:w-auto px-12 py-8 bg-[#1a1a05] border-4 border-[#ffcc00] text-[#ffcc00] hover:text-black hover:shadow-[0_0_50px_rgba(255,204,0,0.5)] text-xl sm:text-2xl font-black uppercase hover:bg-[#ffcc00] transition-all duration-300 active:scale-95">Победа в раунде</button>
+               <button onClick={() => endRound('loss')} className="w-full sm:w-auto px-12 py-8 bg-[#1a0505] border-4 border-[#ff2e2e] text-[#ff2e2e] hover:text-black hover:shadow-[0_0_50px_rgba(255,46,46,0.6)] text-xl sm:text-2xl font-black uppercase hover:bg-[#ff2e2e] transition-all duration-300 active:scale-95">Поражение</button>
             </div>
           )}
         </div>

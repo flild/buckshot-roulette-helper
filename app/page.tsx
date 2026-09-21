@@ -38,7 +38,10 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[#e0e0e0] font-mono selection:bg-[#ff2e2e] selection:text-black flex flex-col overflow-x-hidden">
+    <main className="min-h-screen bg-[#050505] text-[#e0e0e0] font-mono selection:bg-[#ff2e2e] selection:text-black flex flex-col overflow-x-hidden relative">
+      <div className="noise-overlay" />
+      <div className="vignette" />
+      <div className="crt-overlay" />
       
       <AnimatePresence>
         {showWinAnimation && (
@@ -81,7 +84,7 @@ export default function Page() {
                   <div key={i} className={cn(
                     "w-4 h-6 border-2 flex items-center justify-center transition-all duration-300",
                     i < state.roundWins
-                      ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_10px_rgba(255,204,0,0.6)]"
+                      ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_10px_rgba(255,204,0,0.6)] lamp-on"
                       : "bg-[#111] border-[#333]"
                   )}>
                     {i < state.roundWins && <div className="w-1.5 h-3 bg-white/50" />}
@@ -95,31 +98,39 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex-1 flex flex-col max-w-[1920px] w-full mx-auto">
-          {state.mode === 'setup' ? (
-          <SetupScreen 
-            onStart={startRound} 
-            state={state}
-          />
-        ) : (
-          state.viewMode === 'full' ? (
-            <FullTracker 
-              state={state} 
-              shoot={shoot} 
-              undo={undo} 
-              endRound={endRound}
-              toggleViewMode={toggleViewMode}
-              setKnownShell={setKnownShell}
-            />
-          ) : (
-            <AssistTracker 
-              state={state} 
-              shoot={shoot} 
-              toggleViewMode={toggleViewMode} 
-              endRound={endRound}
-            />
-          )
-        )}
+        <div className="flex-1 flex flex-col max-w-[1920px] w-full mx-auto relative">
+          <AnimatePresence mode="wait">
+            {state.mode === 'setup' ? (
+              <motion.div key="setup" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="flex-1 flex flex-col">
+                <SetupScreen
+                  onStart={startRound}
+                  state={state}
+                />
+              </motion.div>
+            ) : (
+              state.viewMode === 'full' ? (
+                <motion.div key="full" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col h-full">
+                  <FullTracker
+                    state={state}
+                    shoot={shoot}
+                    undo={undo}
+                    endRound={endRound}
+                    toggleViewMode={toggleViewMode}
+                    setKnownShell={setKnownShell}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div key="assist" initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} className="flex-1 flex flex-col h-full">
+                  <AssistTracker
+                    state={state}
+                    shoot={shoot}
+                    toggleViewMode={toggleViewMode}
+                    endRound={endRound}
+                  />
+                </motion.div>
+              )
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

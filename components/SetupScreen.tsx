@@ -37,7 +37,7 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
             <div key={i} className={cn(
               "w-12 h-20 border-4 flex items-center justify-center transition-all duration-500 relative",
               i < state.roundWins
-                ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_30px_rgba(255,204,0,0.6)]"
+                ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_30px_rgba(255,204,0,0.6)] lamp-on"
                 : "border-[#333] bg-[#111]"
             )}>
               {i < state.roundWins && (

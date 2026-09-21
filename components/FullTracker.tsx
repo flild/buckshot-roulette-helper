@@ -224,17 +224,17 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
               <button
                 onClick={() => shoot('live')}
                 disabled={mag.live === 0}
-                className="group relative flex flex-col items-center justify-center border-4 border-[#ff2e2e] bg-[#1a0505] hover:bg-[#ff2e2e] transition-colors disabled:opacity-30 disabled:pointer-events-none active:scale-[0.98]"
+                className="group relative flex flex-col items-center justify-center border-4 border-[#ff2e2e] bg-[#1a0505] hover:bg-[#ff2e2e] hover:shadow-[0_0_40px_rgba(255,46,46,0.5)] transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none active:scale-[0.95]"
               >
-                <span className="text-3xl font-black text-[#ff2e2e] group-hover:text-black uppercase">Боевой</span>
+                <span className="text-3xl font-black text-[#ff2e2e] group-hover:text-black uppercase transition-colors">Боевой</span>
                 <span className="absolute bottom-2 right-2 text-[10px] text-[#ff2e2e]/50 group-hover:text-black/50">[L]</span>
               </button>
               <button
                 onClick={() => shoot('blank')}
                 disabled={mag.blank === 0}
-                className="group relative flex flex-col items-center justify-center border-4 border-[#e0e0e0] bg-[#111] hover:bg-[#e0e0e0] transition-colors disabled:opacity-30 disabled:pointer-events-none active:scale-[0.98]"
+                className="group relative flex flex-col items-center justify-center border-4 border-[#e0e0e0] bg-[#111] hover:bg-[#e0e0e0] hover:shadow-[0_0_40px_rgba(224,224,224,0.3)] transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none active:scale-[0.95]"
               >
-                <span className="text-3xl font-black text-[#e0e0e0] group-hover:text-black uppercase">Холостой</span>
+                <span className="text-3xl font-black text-[#e0e0e0] group-hover:text-black uppercase transition-colors">Холостой</span>
                 <span className="absolute bottom-2 right-2 text-[10px] text-[#e0e0e0]/50 group-hover:text-black/50">[B]</span>
               </button>
             </>
@@ -242,21 +242,21 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
             <>
               <button
                 onClick={() => endRound('abandoned')}
-                className="group relative flex flex-col items-center justify-center border-4 border-[#e0e0e0] bg-[#111] hover:bg-[#e0e0e0] transition-colors active:scale-[0.98]"
+                className="group relative flex flex-col items-center justify-center border-4 border-[#e0e0e0] bg-[#111] hover:bg-[#e0e0e0] hover:shadow-[0_0_30px_rgba(224,224,224,0.3)] transition-all duration-300 active:scale-[0.95]"
               >
-                <span className="text-2xl font-black text-[#e0e0e0] group-hover:text-black uppercase">След. магазин</span>
+                <span className="text-2xl font-black text-[#e0e0e0] group-hover:text-black uppercase transition-colors">След. магазин</span>
               </button>
               <button
                 onClick={() => endRound('win')}
-                className="group relative flex flex-col items-center justify-center border-4 border-[#ffcc00] bg-[#1a1a05] hover:bg-[#ffcc00] transition-colors active:scale-[0.98]"
+                className="group relative flex flex-col items-center justify-center border-4 border-[#ffcc00] bg-[#1a1a05] hover:bg-[#ffcc00] hover:shadow-[0_0_40px_rgba(255,204,0,0.4)] transition-all duration-300 active:scale-[0.95]"
               >
-                <span className="text-2xl font-black text-[#ffcc00] group-hover:text-black uppercase">Победа (Раунд)</span>
+                <span className="text-2xl font-black text-[#ffcc00] group-hover:text-black uppercase transition-colors">Победа (Раунд)</span>
               </button>
               <button
                 onClick={() => endRound('loss')}
-                className="group relative flex flex-col items-center justify-center border-4 border-[#ff2e2e] bg-[#1a0505] hover:bg-[#ff2e2e] transition-colors active:scale-[0.98] col-span-2 sm:col-span-1"
+                className="group relative flex flex-col items-center justify-center border-4 border-[#ff2e2e] bg-[#1a0505] hover:bg-[#ff2e2e] hover:shadow-[0_0_40px_rgba(255,46,46,0.5)] transition-all duration-300 active:scale-[0.95] col-span-2 sm:col-span-1"
               >
-                <span className="text-2xl font-black text-[#ff2e2e] group-hover:text-black uppercase">Поражение</span>
+                <span className="text-2xl font-black text-[#ff2e2e] group-hover:text-black uppercase transition-colors">Поражение</span>
               </button>
             </>
           )}
