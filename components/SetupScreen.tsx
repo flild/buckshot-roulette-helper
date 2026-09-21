@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { AppState } from '@/lib/types';
 
-export function SetupScreen({ onStart, bestStreak, currentStreak }: { onStart: (l: number, b: number) => void, bestStreak: number, currentStreak: number }) {
+export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number) => void, state: AppState }) {
   const [total, setTotal] = useState(5);
   const [live, setLive] = useState(3);
   const blank = total - live;
@@ -21,24 +22,34 @@ export function SetupScreen({ onStart, bestStreak, currentStreak }: { onStart: (
   return (
     <div className="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full px-4 py-8 animate-in fade-in duration-300">
 
-      {/* STREAK TARGET */}
+      {/* MATCH PROGRESS */}
       <div className="bg-[#0a0a0a] border border-[#1a1a1a] p-6 text-center relative overflow-hidden mb-8">
-        <h3 className="text-[#888] tracking-widest uppercase mb-4 text-xs">Серия побед</h3>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-[#888] tracking-widest uppercase text-xs">Прогресс матча</h3>
+          <span className="text-[#ff2e2e] text-[10px] uppercase font-bold tracking-widest">
+            Пройдено матчей: {state.matchesWon}
+          </span>
+        </div>
 
-        <div className="flex justify-center gap-2 mb-4">
-          {[...Array(7)].map((_, i) => (
+        {/* 3 Charges for the current match */}
+        <div className="flex justify-center gap-6 mb-6">
+          {[...Array(3)].map((_, i) => (
             <div key={i} className={cn(
-              "w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-500",
-              i < currentStreak ? "bg-[#ff2e2e] border-[#ff2e2e] shadow-[0_0_15px_rgba(255,46,46,0.4)]" : "border-[#333] bg-[#111]"
+              "w-12 h-20 border-4 flex items-center justify-center transition-all duration-500 relative",
+              i < state.roundWins
+                ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_30px_rgba(255,204,0,0.6)] lamp-on"
+                : "border-[#333] bg-[#111]"
             )}>
-              {i < currentStreak && <div className="w-2.5 h-2.5 bg-black rounded-full" />}
+              {i < state.roundWins && (
+                <div className="w-4 h-10 bg-white/70 shadow-[0_0_15px_white]" />
+              )}
             </div>
           ))}
         </div>
 
         <div className="flex items-center justify-between font-mono text-[10px] uppercase">
-          <span className="text-[#666]">Лучшая: <strong className="text-[#ffcc00]">{bestStreak}</strong></span>
-          <span className="text-[#ff2e2e]">ЦЕЛЬ: ВЫЖИТЬ 7 РАУНДОВ</span>
+          <span className="text-[#666]">Лучшая серия: <strong className="text-[#ffcc00]">{state.bestMatchesWon}</strong></span>
+          <span className="text-[#ff2e2e]">ЦЕЛЬ: ЗАКРЫТЬ 7 МАТЧЕЙ</span>
         </div>
       </div>
 

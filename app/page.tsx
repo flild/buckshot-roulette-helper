@@ -16,13 +16,13 @@ export default function Page() {
 
   useEffect(() => {
     let t: NodeJS.Timeout;
-    if (state.streak === 7 && state.mode === 'setup') {
+    if (state.matchesWon === 7 && state.mode === 'setup') {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowWinAnimation(true);
       t = setTimeout(() => setShowWinAnimation(false), 4000);
     }
     return () => clearTimeout(t);
-  }, [state.streak, state.mode]);
+  }, [state.matchesWon, state.mode]);
 
   useKeyboardShortcuts({
     shoot,
@@ -38,7 +38,10 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[#e0e0e0] font-mono selection:bg-[#ff2e2e] selection:text-black flex flex-col overflow-x-hidden">
+    <main className="min-h-screen bg-[#050505] text-[#e0e0e0] font-mono selection:bg-[#ff2e2e] selection:text-black flex flex-col overflow-x-hidden relative">
+      <div className="noise-overlay" />
+      <div className="vignette" />
+      <div className="crt-overlay" />
       
       <AnimatePresence>
         {showWinAnimation && (
@@ -51,7 +54,7 @@ export default function Page() {
             <div className="text-center">
               <Trophy className="w-32 h-32 text-yellow-500 mx-auto mb-6 drop-shadow-[0_0_30px_rgba(234,179,8,0.5)]" />
               <h2 className="text-5xl font-black text-yellow-500 tracking-wider mb-2 uppercase">Достижение получено</h2>
-              <p className="text-2xl text-yellow-200 font-mono">7 побед подряд</p>
+              <p className="text-2xl text-yellow-200 font-mono">7 пройденных матчей</p>
             </div>
           </motion.div>
         )}
@@ -69,11 +72,23 @@ export default function Page() {
               <span className="text-[10px] uppercase text-[#666]">Текущий Раунд</span>
               <span className="text-lg font-bold text-[#ffcc00]">#{state.roundsHistory.length + 1}</span>
             </div>
+            <div className="flex flex-col items-end hidden sm:flex">
+              <span className="text-[10px] uppercase text-[#666]">Пройдено матчей</span>
+              <span className="text-lg font-bold text-[#ff2e2e]">{state.matchesWon}</span>
+            </div>
+
             <div className="flex flex-col items-end">
-              <span className="text-[10px] uppercase text-[#666] text-right">Серия Побед</span>
-              <div className="flex gap-1 mt-1">
-                {[...Array(7)].map((_, i) => (
-                  <div key={i} className={cn("w-3 h-3 rounded-full", i < state.streak ? "bg-[#ff2e2e]" : "bg-[#333]")} />
+              <span className="text-[10px] uppercase text-[#666] text-right mb-1">Заряды (Раунд)</span>
+              <div className="flex gap-2">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className={cn(
+                    "w-4 h-6 border-2 flex items-center justify-center transition-all duration-300",
+                    i < state.roundWins
+                      ? "bg-[#ffcc00] border-[#ffcc00] shadow-[0_0_10px_rgba(255,204,0,0.6)] lamp-on"
+                      : "bg-[#111] border-[#333]"
+                  )}>
+                    {i < state.roundWins && <div className="w-1.5 h-3 bg-white/50" />}
+                  </div>
                 ))}
               </div>
             </div>
@@ -83,32 +98,39 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="flex-1 flex flex-col max-w-[1920px] w-full mx-auto">
-          {state.mode === 'setup' ? (
-          <SetupScreen 
-            onStart={startRound} 
-            bestStreak={state.bestStreak} 
-            currentStreak={state.streak} 
-          />
-        ) : (
-          state.viewMode === 'full' ? (
-            <FullTracker 
-              state={state} 
-              shoot={shoot} 
-              undo={undo} 
-              endRound={endRound}
-              toggleViewMode={toggleViewMode}
-              setKnownShell={setKnownShell}
-            />
-          ) : (
-            <AssistTracker 
-              state={state} 
-              shoot={shoot} 
-              toggleViewMode={toggleViewMode} 
-              endRound={endRound}
-            />
-          )
-        )}
+        <div className="flex-1 flex flex-col max-w-[1920px] w-full mx-auto relative">
+          <AnimatePresence mode="wait">
+            {state.mode === 'setup' ? (
+              <motion.div key="setup" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="flex-1 flex flex-col">
+                <SetupScreen
+                  onStart={startRound}
+                  state={state}
+                />
+              </motion.div>
+            ) : (
+              state.viewMode === 'full' ? (
+                <motion.div key="full" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="flex-1 flex flex-col h-full">
+                  <FullTracker
+                    state={state}
+                    shoot={shoot}
+                    undo={undo}
+                    endRound={endRound}
+                    toggleViewMode={toggleViewMode}
+                    setKnownShell={setKnownShell}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div key="assist" initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} className="flex-1 flex flex-col h-full">
+                  <AssistTracker
+                    state={state}
+                    shoot={shoot}
+                    toggleViewMode={toggleViewMode}
+                    endRound={endRound}
+                  />
+                </motion.div>
+              )
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
