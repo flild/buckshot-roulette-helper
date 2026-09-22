@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { AppState } from '@/lib/types';
+import { useLanguage } from '@/lib/i18n';
 
 export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number) => void, state: AppState }) {
+  const { t } = useLanguage();
   const [total, setTotal] = useState(5);
   const [live, setLive] = useState(3);
   const blank = total - live;
@@ -25,9 +27,9 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
       {/* MATCH PROGRESS */}
       <div className="bg-[#0a0a0a] border border-[#1a1a1a] p-6 text-center relative overflow-hidden mb-8">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-[#888] tracking-widest uppercase text-xs">Прогресс матча</h3>
+          <h3 className="text-[#888] tracking-widest uppercase text-xs">{t('setup.matchProgress')}</h3>
           <span className="text-[#ff2e2e] text-[10px] uppercase font-bold tracking-widest">
-            Пройдено матчей: {state.matchesWon}
+            {t('setup.matchesWon', { count: state.matchesWon })}
           </span>
         </div>
 
@@ -48,18 +50,18 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
         </div>
 
         <div className="flex items-center justify-between font-mono text-[10px] uppercase">
-          <span className="text-[#666]">Лучшая серия: <strong className="text-[#ffcc00]">{state.bestMatchesWon}</strong></span>
-          <span className="text-[#ff2e2e]">ЦЕЛЬ: ЗАКРЫТЬ 7 МАТЧЕЙ</span>
+          <span className="text-[#666]">{t('setup.bestStreak')} <strong className="text-[#ffcc00]">{state.bestMatchesWon}</strong></span>
+          <span className="text-[#ff2e2e]">{t('setup.goal')}</span>
         </div>
       </div>
 
       {/* SETUP CONTROLS */}
       <div className="bg-[#0a0a0a] border border-[#1a1a1a] p-8">
-        <h2 className="text-xl font-bold text-[#e0e0e0] text-center mb-8 uppercase tracking-widest border-b border-[#1a1a1a] pb-4">Зарядка магазина</h2>
+        <h2 className="text-xl font-bold text-[#e0e0e0] text-center mb-8 uppercase tracking-widest border-b border-[#1a1a1a] pb-4">{t('setup.chargeMag')}</h2>
 
         <div className="space-y-8">
           <div>
-            <label className="block text-[#666] text-center mb-4 uppercase text-[10px] tracking-widest">Всего патронов</label>
+            <label className="block text-[#666] text-center mb-4 uppercase text-[10px] tracking-widest">{t('setup.totalShells')}</label>
             <div className="flex justify-center gap-2 flex-wrap">
               {[2,3,4,5,6,7,8].map(n => (
                 <button
@@ -80,7 +82,7 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 border-y border-[#1a1a1a] py-6">
             <div className="text-center flex-1">
-              <label className="block text-[#ff2e2e] mb-2 uppercase text-[10px] tracking-widest">Боевых</label>
+              <label className="block text-[#ff2e2e] mb-2 uppercase text-[10px] tracking-widest">{t('setup.liveShells')}</label>
               <div className="flex items-center justify-center gap-4 bg-[#111] p-2 border border-[#222]">
                 <button onClick={() => setLive(Math.max(0, live - 1))} className="w-10 h-10 bg-[#222] hover:bg-[#333] text-[#e0e0e0] text-xl flex items-center justify-center">-</button>
                 <span className="text-4xl font-black text-[#ff2e2e] w-12">{live}</span>
@@ -89,7 +91,7 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
             </div>
 
             <div className="text-center flex-1">
-              <label className="block text-[#888] mb-2 uppercase text-[10px] tracking-widest">Холостых</label>
+              <label className="block text-[#888] mb-2 uppercase text-[10px] tracking-widest">{t('setup.blankShells')}</label>
               <div className="flex items-center justify-center gap-4 bg-[#111] p-2 border border-[#222]">
                 <div className="w-10 h-10 opacity-0 pointer-events-none" />
                 <span className="text-4xl font-black text-[#e0e0e0] w-12">{blank}</span>
@@ -99,7 +101,7 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
           </div>
 
           <div>
-            <label className="block text-[#666] text-center mb-3 uppercase text-[10px] tracking-widest">Быстрые пресеты</label>
+            <label className="block text-[#666] text-center mb-3 uppercase text-[10px] tracking-widest">{t('setup.presets')}</label>
             <div className="flex flex-wrap justify-center gap-5">
               {presets.map((p, i) => (
                 <button
@@ -107,7 +109,7 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
                   onClick={() => { setTotal(p.l + p.b); setLive(p.l); }}
                   className="px-4 py-2 bg-[#111] hover:bg-[#222] border border-[#222] text-[10px] text-[#888] flex items-center gap-2 uppercase font-bold transition-colors"
                 >
-                  <span className="text-[#ff2e2e]">{p.l} Б</span> / <span className="text-[#e0e0e0]">{p.b} Х</span>
+                  <span className="text-[#ff2e2e]">{p.l} {t('setup.l')}</span> / <span className="text-[#e0e0e0]">{p.b} {t('setup.b')}</span>
                 </button>
               ))}
             </div>
@@ -118,7 +120,7 @@ export function SetupScreen({ onStart, state }: { onStart: (l: number, b: number
             disabled={total === 0}
             className="w-full py-6 bg-[#ff2e2e] text-black font-black text-2xl uppercase tracking-widest hover:bg-[#e62929] transition-colors mt-8 shadow-[0_0_20px_rgba(255,46,46,0.2)] hover:shadow-[0_0_30px_rgba(255,46,46,0.4)] disabled:opacity-50 disabled:pointer-events-none"
           >
-            Начать Отслеживание
+            {t('setup.startTracking')}
           </button>
         </div>
       </div>

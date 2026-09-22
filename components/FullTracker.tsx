@@ -3,6 +3,7 @@ import { Undo2, Eye } from 'lucide-react';
 import { cn, getProbabilities } from '@/lib/utils';
 import { AppState, ShellType, Shot, KnownState } from '@/lib/types';
 import { ShellIcon } from './ShellIcon';
+import { useLanguage } from '@/lib/i18n';
 
 export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setKnownShell }: {
   state: AppState;
@@ -12,6 +13,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
   toggleViewMode: () => void;
   setKnownShell: (index: number, stateValue: KnownState) => void;
 }) {
+  const { t } = useLanguage();
   const mag = state.currentMagazine;
   if (!mag) return null;
   const { pLive, pBlank } = getProbabilities(mag, state.initialMagazine);
@@ -40,12 +42,12 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
         {/* History Section */}
         <div className="flex-1 flex flex-col overflow-hidden min-h-[300px]">
           <div className="p-6 pb-2">
-            <h3 className="text-[11px] uppercase tracking-widest text-[#555]">История Раунда</h3>
+            <h3 className="text-[11px] uppercase tracking-widest text-[#555]">{t('full.historyTitle')}</h3>
           </div>
           <div className="flex-1 overflow-y-auto no-scrollbar px-6 pb-6">
             <div className="flex flex-col gap-2 border-l border-[#1a1a1a] ml-2 pl-4">
               {state.shots.length === 0 ? (
-                <p className="text-[#666] text-sm mt-2 opacity-50">Нет записанных выстрелов</p>
+                <p className="text-[#666] text-sm mt-2 opacity-50">{t('full.historyEmpty')}</p>
               ) : (
                 <AnimatePresence mode="popLayout">
                   {[...state.shots].reverse().map((shot: Shot) => (
@@ -74,23 +76,23 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
 
         {/* Assist Mode Toggle / Reset */}
         <div className="p-6 bg-[#0a0a0a] border-t border-[#1a1a1a]">
-          <h3 className="text-[11px] uppercase tracking-widest text-[#555] mb-4">Управление Матчем</h3>
+          <h3 className="text-[11px] uppercase tracking-widest text-[#555] mb-4">{t('full.matchControl')}</h3>
           <div className="flex flex-col gap-2">
             <button onClick={() => endRound('abandoned')} className="px-4 py-2 bg-[#111] hover:bg-[#222] border border-[#222] text-[10px] text-[#e0e0e0] uppercase font-bold text-left transition-colors flex justify-between">
-              <span>Сбросить магазин (Скип)</span>
+              <span>{t('full.resetMag')} ({t('full.skip')})</span>
               <span className="text-[#666]">[R]</span>
             </button>
             <div className="grid grid-cols-2 gap-2 mt-2">
-              <button onClick={() => endRound('win')} className="px-4 py-2 bg-[#1a1a05] hover:bg-[#ffcc00] border border-[#332b00] hover:text-black text-[10px] text-[#ffcc00] uppercase font-bold transition-colors">Победа (Раунд)</button>
-              <button onClick={() => endRound('loss')} className="px-4 py-2 bg-[#1a0505] hover:bg-[#ff2e2e] border border-[#330a0a] hover:text-black text-[10px] text-[#ff2e2e] uppercase font-bold transition-colors">Поражение</button>
+              <button onClick={() => endRound('win')} className="px-4 py-2 bg-[#1a1a05] hover:bg-[#ffcc00] border border-[#332b00] hover:text-black text-[10px] text-[#ffcc00] uppercase font-bold transition-colors">{t('full.winRound')}</button>
+              <button onClick={() => endRound('loss')} className="px-4 py-2 bg-[#1a0505] hover:bg-[#ff2e2e] border border-[#330a0a] hover:text-black text-[10px] text-[#ff2e2e] uppercase font-bold transition-colors">{t('full.loss')}</button>
             </div>
           </div>
 
           <div className="flex items-center justify-between mt-8">
-            <span className="text-[11px] uppercase text-[#666]">Режим интерфейса</span>
+            <span className="text-[11px] uppercase text-[#666]">{t('full.interfaceMode')}</span>
             <div className="flex bg-[#111] p-1 rounded-sm border border-[#222]">
-              <button onClick={toggleViewMode} className="px-3 py-1 bg-[#222] text-[10px] text-white uppercase font-bold">Полный</button>
-              <button onClick={toggleViewMode} className="px-3 py-1 text-[10px] text-[#444] uppercase hover:text-[#888]">Помощник</button>
+              <button onClick={toggleViewMode} className="px-3 py-1 bg-[#222] text-[10px] text-white uppercase font-bold">{t('full.fullMode')}</button>
+              <button onClick={toggleViewMode} className="px-3 py-1 text-[10px] text-[#444] uppercase hover:text-[#888]">{t('full.assistMode').replace(' (F)', '')}</button>
             </div>
           </div>
         </div>
@@ -128,8 +130,8 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
             <div className="absolute top-0 left-0 w-1 h-full bg-[#333]" />
             <div className="flex justify-between items-end mb-4 ml-4">
               <div>
-                <h3 className="text-[12px] uppercase tracking-widest text-[#e0e0e0] font-bold">Очередь патронов</h3>
-                <span className="text-[10px] uppercase text-[#666]">Кликните, чтобы отметить (Телефон)</span>
+                <h3 className="text-[12px] uppercase tracking-widest text-[#e0e0e0] font-bold">{t('full.queue')}</h3>
+                <span className="text-[10px] uppercase text-[#666]">{t('full.clickToMark')}</span>
               </div>
             </div>
 
@@ -165,7 +167,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
                       s === 'unknown' ? "text-[#444] group-hover:text-[#666]" :
                       s === 'live' ? "text-[#ff2e2e]" : "text-[#e0e0e0]"
                     )}>
-                      {s === 'unknown' ? '?' : s === 'live' ? 'Б' : 'Х'}
+                      {s === 'unknown' ? t('full.unknown') : s === 'live' ? t('full.liveInitial') : t('full.blankInitial')}
                     </span>
                     {isFired && (
                        <div className="absolute inset-0 flex items-center justify-center opacity-70">
@@ -182,13 +184,13 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
 
         {/* PROBABILITY */}
         <div className="flex-1 flex flex-col items-center justify-center mb-12 mt-6">
-          <span className="text-[14px] uppercase tracking-widest text-[#666] mb-8">Шанс следующего выстрела</span>
+          <span className="text-[14px] uppercase tracking-widest text-[#666] mb-8">{t('full.chanceNext')}</span>
 
           {!isEmpty ? (
             <div className="flex w-full items-center gap-6">
               <div className="flex-1 flex flex-col items-center">
                 <span className="text-6xl font-black text-[#ff2e2e]">{pLive.toFixed(0)}%</span>
-                <span className="text-[12px] uppercase text-[#ff2e2e] mt-2">Боевой</span>
+                <span className="text-[12px] uppercase text-[#ff2e2e] mt-2">{t('full.liveChance')}</span>
               </div>
               <div className="flex-[2] h-12 bg-[#111] border border-[#222] rounded-full flex overflow-hidden p-1">
                 <motion.div
@@ -206,13 +208,13 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
               </div>
               <div className="flex-1 flex flex-col items-center">
                 <span className="text-6xl font-black text-[#e0e0e0]">{pBlank.toFixed(0)}%</span>
-                <span className="text-[12px] uppercase text-[#888] mt-2">Холостой</span>
+                <span className="text-[12px] uppercase text-[#888] mt-2">{t('full.blankChance')}</span>
               </div>
             </div>
           ) : (
              <div className="text-center py-8">
-               <h3 className="text-3xl font-black text-[#e0e0e0] uppercase tracking-widest mb-2">Магазин пуст</h3>
-               <p className="text-[#666] font-mono">Завершите раунд для продолжения</p>
+               <h3 className="text-3xl font-black text-[#e0e0e0] uppercase tracking-widest mb-2">{t('full.magEmpty')}</h3>
+               <p className="text-[#666] font-mono">{t('full.completeRoundToContinue')}</p>
              </div>
           )}
         </div>
@@ -226,7 +228,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
                 disabled={mag.live === 0}
                 className="group relative flex flex-col items-center justify-center border-4 border-[#ff2e2e] bg-[#1a0505] hover:bg-[#ff2e2e] hover:shadow-[0_0_40px_rgba(255,46,46,0.5)] transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none active:scale-[0.95]"
               >
-                <span className="text-3xl font-black text-[#ff2e2e] group-hover:text-black uppercase transition-colors">Боевой</span>
+                <span className="text-3xl font-black text-[#ff2e2e] group-hover:text-black uppercase transition-colors">{t('full.liveBtn')}</span>
                 <span className="absolute bottom-2 right-2 text-[10px] text-[#ff2e2e]/50 group-hover:text-black/50">[L]</span>
               </button>
               <button
@@ -234,7 +236,7 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
                 disabled={mag.blank === 0}
                 className="group relative flex flex-col items-center justify-center border-4 border-[#e0e0e0] bg-[#111] hover:bg-[#e0e0e0] hover:shadow-[0_0_40px_rgba(224,224,224,0.3)] transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none active:scale-[0.95]"
               >
-                <span className="text-3xl font-black text-[#e0e0e0] group-hover:text-black uppercase transition-colors">Холостой</span>
+                <span className="text-3xl font-black text-[#e0e0e0] group-hover:text-black uppercase transition-colors">{t('full.blankBtn')}</span>
                 <span className="absolute bottom-2 right-2 text-[10px] text-[#e0e0e0]/50 group-hover:text-black/50">[B]</span>
               </button>
             </>
@@ -244,19 +246,19 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
                 onClick={() => endRound('abandoned')}
                 className="group relative flex flex-col items-center justify-center border-4 border-[#e0e0e0] bg-[#111] hover:bg-[#e0e0e0] hover:shadow-[0_0_30px_rgba(224,224,224,0.3)] transition-all duration-300 active:scale-[0.95]"
               >
-                <span className="text-2xl font-black text-[#e0e0e0] group-hover:text-black uppercase transition-colors">След. магазин</span>
+                <span className="text-2xl font-black text-[#e0e0e0] group-hover:text-black uppercase transition-colors">{t('full.nextMag')}</span>
               </button>
               <button
                 onClick={() => endRound('win')}
                 className="group relative flex flex-col items-center justify-center border-4 border-[#ffcc00] bg-[#1a1a05] hover:bg-[#ffcc00] hover:shadow-[0_0_40px_rgba(255,204,0,0.4)] transition-all duration-300 active:scale-[0.95]"
               >
-                <span className="text-2xl font-black text-[#ffcc00] group-hover:text-black uppercase transition-colors">Победа (Раунд)</span>
+                <span className="text-2xl font-black text-[#ffcc00] group-hover:text-black uppercase transition-colors">{t('full.winRound')}</span>
               </button>
               <button
                 onClick={() => endRound('loss')}
                 className="group relative flex flex-col items-center justify-center border-4 border-[#ff2e2e] bg-[#1a0505] hover:bg-[#ff2e2e] hover:shadow-[0_0_40px_rgba(255,46,46,0.5)] transition-all duration-300 active:scale-[0.95] col-span-2 sm:col-span-1"
               >
-                <span className="text-2xl font-black text-[#ff2e2e] group-hover:text-black uppercase transition-colors">Поражение</span>
+                <span className="text-2xl font-black text-[#ff2e2e] group-hover:text-black uppercase transition-colors">{t('full.loss')}</span>
               </button>
             </>
           )}
@@ -269,9 +271,9 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
             disabled={state.shots.length === 0}
             className="text-[#666] hover:text-[#e0e0e0] uppercase text-xs flex items-center gap-2 disabled:opacity-30"
           >
-            <Undo2 className="w-4 h-4" /> [U] Отменить Действие
+            <Undo2 className="w-4 h-4" /> {t('full.undoAction')}
           </button>
-          <span className="text-[#444] text-[10px] uppercase hidden sm:block">Порядок неизвестен - только вероятности</span>
+          <span className="text-[#444] text-[10px] uppercase hidden sm:block">{t('full.orderUnknown')}</span>
         </div>
       </div>
     </div>
