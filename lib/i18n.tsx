@@ -181,9 +181,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('buckshot_language', lang);
   };
 
+  // During SSR/hydration, the language is always "ru", guaranteeing an identical HTML output.
+  // We only enable switching after mount, so no hydration mismatch can happen.
+  const currentLanguage = mounted ? language : 'ru';
   const t = (key: string, replacements?: Record<string, string | number>): string => {
     const keys = key.split('.');
-    let result: any = translations[language];
+    let result: any = translations[currentLanguage];
     for (const k of keys) {
       if (result === undefined) break;
       result = result[k];
@@ -198,8 +201,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {mounted ? children : <div style={{ visibility: 'hidden' }}>{children}</div>}
+    <LanguageContext.Provider value={{ language: currentLanguage, setLanguage, t }}>
+      {children}
     </LanguageContext.Provider>
   );
 }

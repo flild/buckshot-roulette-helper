@@ -42,12 +42,12 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
         {/* History Section */}
         <div className="flex-1 flex flex-col overflow-hidden min-h-[300px]">
           <div className="p-6 pb-2">
-            <h3 className="text-[11px] uppercase tracking-widest text-[#555]">История Раунда</h3>
+            <h3 className="text-[11px] uppercase tracking-widest text-[#555]">{t('full.historyTitle')}</h3>
           </div>
           <div className="flex-1 overflow-y-auto no-scrollbar px-6 pb-6">
             <div className="flex flex-col gap-2 border-l border-[#1a1a1a] ml-2 pl-4">
               {state.shots.length === 0 ? (
-                <p className="text-[#666] text-sm mt-2 opacity-50">Нет записанных выстрелов</p>
+                <p className="text-[#666] text-sm mt-2 opacity-50">{t('full.historyEmpty')}</p>
               ) : (
                 <AnimatePresence mode="popLayout">
                   {[...state.shots].reverse().map((shot: Shot) => (
@@ -76,23 +76,23 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
 
         {/* Assist Mode Toggle / Reset */}
         <div className="p-6 bg-[#0a0a0a] border-t border-[#1a1a1a]">
-          <h3 className="text-[11px] uppercase tracking-widest text-[#555] mb-4">Управление Матчем</h3>
+          <h3 className="text-[11px] uppercase tracking-widest text-[#555] mb-4">{t('full.matchControl')}</h3>
           <div className="flex flex-col gap-2">
             <button onClick={() => endRound('abandoned')} className="px-4 py-2 bg-[#111] hover:bg-[#222] border border-[#222] text-[10px] text-[#e0e0e0] uppercase font-bold text-left transition-colors flex justify-between">
-              <span>Сбросить магазин (Скип)</span>
+              <span>{t('full.resetMag')} ({t('full.skip')})</span>
               <span className="text-[#666]">[R]</span>
             </button>
             <div className="grid grid-cols-2 gap-2 mt-2">
-              <button onClick={() => endRound('win')} className="px-4 py-2 bg-[#1a1a05] hover:bg-[#ffcc00] border border-[#332b00] hover:text-black text-[10px] text-[#ffcc00] uppercase font-bold transition-colors">Победа (Раунд)</button>
-              <button onClick={() => endRound('loss')} className="px-4 py-2 bg-[#1a0505] hover:bg-[#ff2e2e] border border-[#330a0a] hover:text-black text-[10px] text-[#ff2e2e] uppercase font-bold transition-colors">Поражение</button>
+              <button onClick={() => endRound('win')} className="px-4 py-2 bg-[#1a1a05] hover:bg-[#ffcc00] border border-[#332b00] hover:text-black text-[10px] text-[#ffcc00] uppercase font-bold transition-colors">{t('full.winRound')}</button>
+              <button onClick={() => endRound('loss')} className="px-4 py-2 bg-[#1a0505] hover:bg-[#ff2e2e] border border-[#330a0a] hover:text-black text-[10px] text-[#ff2e2e] uppercase font-bold transition-colors">{t('full.loss')}</button>
             </div>
           </div>
 
           <div className="flex items-center justify-between mt-8">
-            <span className="text-[11px] uppercase text-[#666]">Режим интерфейса</span>
+            <span className="text-[11px] uppercase text-[#666]">{t('full.interfaceMode')}</span>
             <div className="flex bg-[#111] p-1 rounded-sm border border-[#222]">
-              <button onClick={toggleViewMode} className="px-3 py-1 bg-[#222] text-[10px] text-white uppercase font-bold">Полный</button>
-              <button onClick={toggleViewMode} className="px-3 py-1 text-[10px] text-[#444] uppercase hover:text-[#888]">Помощник</button>
+              <button onClick={toggleViewMode} className="px-3 py-1 bg-[#222] text-[10px] text-white uppercase font-bold">{t('full.fullMode')}</button>
+              <button onClick={toggleViewMode} className="px-3 py-1 text-[10px] text-[#444] uppercase hover:text-[#888]">{t('full.assistMode').replace(' (F)', '')}</button>
             </div>
           </div>
         </div>
