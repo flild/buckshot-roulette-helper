@@ -164,15 +164,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    let initialLang: Language = 'ru';
     const saved = localStorage.getItem('buckshot_language') as Language;
     if (saved && (saved === 'ru' || saved === 'en')) {
-      setLanguageState(saved);
+      initialLang = saved;
     } else {
       const browserLang = navigator.language.slice(0, 2);
       if (browserLang === 'en' || browserLang === 'ru') {
-        setLanguageState(browserLang as Language);
+        initialLang = browserLang as Language;
       }
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLanguageState(initialLang);
     setMounted(true);
   }, []);
 

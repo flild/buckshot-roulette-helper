@@ -5,3 +5,12 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Next.js / build output
+/out
+/build
+.vercel
+
+# testing
+/playwright-report
+/test-results
