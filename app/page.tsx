@@ -40,9 +40,9 @@ function PageContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[#e0e0e0] font-mono selection:bg-[#ff2e2e] selection:text-black flex flex-col overflow-x-hidden relative">
+    <main className="min-h-screen text-[#e0e0e0] font-mono selection:bg-[#ff2e2e] selection:text-black flex flex-col overflow-x-hidden relative">
       <div className="noise-overlay" />
-      <div className="vignette" />
+
       <div className="crt-overlay" />
       
       <AnimatePresence>
