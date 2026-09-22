@@ -26,14 +26,14 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
       <div className="w-full lg:w-[280px] xl:w-[320px] bg-[#080808] flex flex-col border-r border-[#222] shrink-0">
         {/* Stats Section */}
         <div className="p-6 border-b border-[#1a1a1a]">
-          <h3 className="text-[11px] uppercase tracking-widest text-[#555] mb-4">Статистика сессии</h3>
+          <h3 className="text-[11px] uppercase tracking-widest text-[#555] mb-4">{t('full.sessionStats')}</h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="p-3 bg-[#0c0c0c] border border-[#1a1a1a]">
-              <div className="text-[10px] text-[#666] uppercase">Лучшая серия</div>
-              <div className="text-xl font-bold text-[#ffcc00]">{state.bestMatchesWon} <span className="text-[10px] text-[#444] font-normal">МАКС</span></div>
+              <div className="text-[10px] text-[#666] uppercase">{t('setup.bestStreak').replace(':', '')}</div>
+              <div className="text-xl font-bold text-[#ffcc00]">{state.bestMatchesWon} <span className="text-[10px] text-[#444] font-normal">{t('full.maxCap')}</span></div>
             </div>
             <div className="p-3 bg-[#0c0c0c] border border-[#1a1a1a]">
-              <div className="text-[10px] text-[#666] uppercase">Всего выстрелов</div>
+              <div className="text-[10px] text-[#666] uppercase">{t('full.totalShots')}</div>
               <div className="text-xl font-bold text-[#e0e0e0]">{state.shots.length}</div>
             </div>
           </div>
@@ -108,8 +108,8 @@ export function FullTracker({ state, shoot, undo, endRound, toggleViewMode, setK
           </button>
 
           <div className="flex justify-between items-end mb-4">
-            <h2 className="text-[12px] uppercase tracking-widest text-[#888]">Осталось патронов</h2>
-            <span className="text-2xl font-black text-[#e0e0e0]">{mag.total} <span className="text-[12px] text-[#555] font-normal">/ {state.initialMagazine?.total || 0} ВСЕГО</span></span>
+            <h2 className="text-[12px] uppercase tracking-widest text-[#888]">{t('full.shellsLeft')}</h2>
+            <span className="text-2xl font-black text-[#e0e0e0]">{mag.total} <span className="text-[12px] text-[#555] font-normal">{t('full.total', { count: state.initialMagazine?.total || 0 })}</span></span>
           </div>
 
           <div className="flex flex-wrap gap-4 p-8 bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg justify-center min-h-[140px]">
