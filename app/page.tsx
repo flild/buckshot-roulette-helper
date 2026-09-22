@@ -9,10 +9,12 @@ import { cn } from '@/lib/utils';
 import { SetupScreen } from '@/components/SetupScreen';
 import { FullTracker } from '@/components/FullTracker';
 import { AssistTracker } from '@/components/AssistTracker';
+import { useLanguage, LanguageProvider } from '@/lib/i18n';
 
-export default function Page() {
+function PageContent() {
   const { state, hydrated, startRound, shoot, undo, endRound, toggleViewMode, setKnownShell } = useBuckshot();
   const [showWinAnimation, setShowWinAnimation] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     let t: NodeJS.Timeout;
@@ -34,7 +36,7 @@ export default function Page() {
   });
 
   if (!hydrated) {
-    return <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center text-white font-mono">ЗАГРУЗКА ТЕРМИНАЛА...</div>;
+    return <div className="min-h-screen bg-[#0a0a0c] flex items-center justify-center text-white font-mono">{t('app.loading')}</div>;
   }
 
   return (
@@ -53,8 +55,8 @@ export default function Page() {
           >
             <div className="text-center">
               <Trophy className="w-32 h-32 text-yellow-500 mx-auto mb-6 drop-shadow-[0_0_30px_rgba(234,179,8,0.5)]" />
-              <h2 className="text-5xl font-black text-yellow-500 tracking-wider mb-2 uppercase">Достижение получено</h2>
-              <p className="text-2xl text-yellow-200 font-mono">7 пройденных матчей</p>
+              <h2 className="text-5xl font-black text-yellow-500 tracking-wider mb-2 uppercase">{t('app.achievement')}</h2>
+              <p className="text-2xl text-yellow-200 font-mono">{t('app.matchesPassed', { count: 7 })}</p>
             </div>
           </motion.div>
         )}
@@ -63,22 +65,29 @@ export default function Page() {
       <div className="flex flex-col flex-1 relative z-10">
         <header className="flex flex-col sm:flex-row justify-between items-center px-6 py-4 border-b border-[#222] bg-[#0a0a0a] gap-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-[#ff2e2e] text-xl font-black tracking-tighter uppercase">Трекер Buckshot</h1>
+            <h1 className="text-[#ff2e2e] text-xl font-black tracking-tighter uppercase">{t('app.title')}</h1>
             <span className="px-2 py-1 bg-[#222] text-[10px] text-[#888] rounded hidden sm:inline-block">v1.05.STAT</span>
+
+            <button
+              onClick={() => setLanguage(language === 'ru' ? 'en' : 'ru')}
+              className="ml-4 px-2 py-1 bg-[#111] hover:bg-[#222] border border-[#333] text-[10px] text-[#888] hover:text-[#e0e0e0] font-bold uppercase transition-colors rounded"
+            >
+              {language === 'ru' ? 'EN / RU' : 'RU / EN'}
+            </button>
           </div>
           
           <div className="flex items-center gap-8">
             <div className="flex flex-col items-end hidden sm:flex">
-              <span className="text-[10px] uppercase text-[#666]">Текущий Раунд</span>
+              <span className="text-[10px] uppercase text-[#666]">{t('app.currentRound')}</span>
               <span className="text-lg font-bold text-[#ffcc00]">#{state.roundsHistory.length + 1}</span>
             </div>
             <div className="flex flex-col items-end hidden sm:flex">
-              <span className="text-[10px] uppercase text-[#666]">Пройдено матчей</span>
+              <span className="text-[10px] uppercase text-[#666]">{t('app.matchesWon')}</span>
               <span className="text-lg font-bold text-[#ff2e2e]">{state.matchesWon}</span>
             </div>
 
             <div className="flex flex-col items-end">
-              <span className="text-[10px] uppercase text-[#666] text-right mb-1">Заряды (Раунд)</span>
+              <span className="text-[10px] uppercase text-[#666] text-right mb-1">{t('app.charges')}</span>
               <div className="flex gap-2">
                 {[...Array(3)].map((_, i) => (
                   <div key={i} className={cn(
@@ -93,7 +102,7 @@ export default function Page() {
               </div>
             </div>
             {state.mode === 'playing' && (
-              <button onClick={() => endRound('abandoned')} className="px-4 py-2 bg-[#222] text-[#e0e0e0] font-bold text-xs uppercase hover:bg-[#333] border border-[#333] transition-colors">След. Магазин</button>
+              <button onClick={() => endRound('abandoned')} className="px-4 py-2 bg-[#222] text-[#e0e0e0] font-bold text-xs uppercase hover:bg-[#333] border border-[#333] transition-colors">{t('app.nextMag')}</button>
             )}
           </div>
         </header>
@@ -135,8 +144,16 @@ export default function Page() {
       </div>
 
       <div className="h-8 bg-[#050505] border-t border-[#1a1a1a] flex items-center justify-center px-6 mt-auto shrink-0 z-50">
-        <span className="text-[9px] text-[#444] tracking-[0.2em] uppercase">Автономный Трекер // Нет связи с игрой // Хоткеи: [L] Боевой [B] Холостой [U] Отмена [F] Режим</span>
+        <span className="text-[9px] text-[#444] tracking-[0.2em] uppercase">{t('app.footerText')}</span>
       </div>
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <LanguageProvider>
+      <PageContent />
+    </LanguageProvider>
   );
 }
