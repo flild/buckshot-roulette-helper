@@ -8,7 +8,7 @@
 
 **Live Demo**: [#todo](https://#todo)
 
-<img width="800" alt="Buckshot Tracker Preview" src="https://github.com/user-attachments/assets/e373a0f0-4c30-4951-8f65-9cddd048b79f" /> <!-- #todo update image if needed -->
+<img width="1743" height="939" alt="image" src="https://github.com/user-attachments/assets/224d924b-54eb-43d4-bfdd-949d2ae6dd08" />
 
 A standalone web assistant for the game **Buckshot Roulette**. It helps track live and blank shells, calculates the exact probabilities of the next shot, and manages known shell sequences (simulating the "Burner Phone" item).
 
